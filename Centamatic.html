@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Centamatic | Aprende practicando</title>
+<style>
+:root{--azul:#1763b6;--claro:#e7f3ff;--verde:#27a96b;--tinta:#18365c;--borde:#d7e5f4;--fondo:#f4f8fd}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--fondo);color:var(--tinta)}
+header{background:linear-gradient(110deg,#174e91,#2878ca);color:white;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
+h1{margin:0;font-size:clamp(24px,4vw,34px)}header p{margin:4px 0 0}main{max-width:1250px;margin:auto;padding:24px}
+.hero,.card{background:white;border:1px solid var(--borde);border-radius:15px;margin-bottom:20px;overflow:hidden}
+.hero{padding:25px;background:linear-gradient(120deg,#e4f3ff,#fff);display:flex;justify-content:space-between;align-items:center;gap:20px}
+.hero h2{color:var(--azul);font-size:30px;margin:0 0 10px}.hero p{line-height:1.5}.cube{font-size:90px}
+.grid{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(0,1.2fr);gap:20px}
+.title{margin:0;padding:15px 18px;background:var(--azul);color:white;font-size:18px}.green{background:var(--verde)}.purple{background:#8155d9}
+.body{padding:20px}label{display:block;font-weight:bold;margin:0 0 8px}input,select{width:100%;padding:12px;border:1px solid #b9cde2;border-radius:8px;font:inherit;color:var(--tinta);background:white}
+.row{display:grid;grid-template-columns:1fr 85px;gap:8px}.formula{padding:14px;text-align:center;background:var(--claro);border-radius:9px;font-size:24px;font-weight:bold;color:var(--azul);margin:15px 0}
+button{padding:12px 15px;border:0;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer}.primary{background:var(--azul);color:white;width:100%}.success{background:var(--verde);color:white}.secondary{background:#edf3f9;color:var(--tinta)}.danger{background:#ffeded;color:#c32f2f}
+.result{padding:14px;margin-top:14px;border:1px solid #a9e7c5;background:#eefbf4;border-radius:9px}.result strong{font-size:24px;color:#16854f}.hint{font-size:14px;line-height:1.5;color:#62758c}.message{font-size:14px;min-height:18px}.error{color:#c32f2f}.ok{color:#16854f}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}.actions{display:flex;justify-content:flex-end;gap:9px;margin-top:15px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}.stat{padding:15px;border-radius:10px;background:#effaf4;border:1px solid #c4ecd5}.stat.pending{background:#fff8e9;border-color:#ffe3a7}.stat strong{display:block;font-size:26px;margin-top:5px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid #e5edf6}th{background:#f1f7fd}.status{font-size:12px;border-radius:20px;padding:5px 8px;background:#fff0ca}.status.done{background:#d9f7e7;color:#11794a}.task-done td:first-child{text-decoration:line-through;color:#62758c}.tablewrap{overflow-x:auto}.table-actions{display:flex;gap:4px}.table-actions button{padding:7px}.empty{text-align:center;padding:18px;color:#62758c}footer{text-align:center;padding:15px;color:#62758c;font-size:13px}
+@media(max-width:800px){main{padding:14px}.grid{grid-template-columns:1fr}.hero{padding:18px}.cube{font-size:60px}}
+@media(max-width:520px){.cube{display:none}.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.actions{flex-direction:column}.actions button{width:100%}header{align-items:flex-start}.body{padding:15px}}
+</style></head>
+<body>
+<header><div><h1>🧊 Centamatic</h1><p>¡Aprende practicando!</p></div><strong>🎓 Grado 6.º</strong></header>
+<main>
+<section class="hero" id="inicio"><div><h2>Bienvenido a Centamatic</h2><p>Descubre, calcula y practica el área total de un cubo de forma fácil y divertida.</p></div><div class="cube" aria-hidden="true">🧊</div></section>
+<div class="grid">
+<div>
+<section class="card" id="calculadora"><h3 class="title">▦ Calculadora del área total</h3><div class="body">
+<label for="arista">Medida de la arista</label><div class="row"><input id="arista" type="number" min="0.01" step="any" placeholder="Ingresa la medida"><select id="unidad"><option>cm</option><option>mm</option><option>m</option></select></div>
+<p class="hint">Ingresa una medida mayor que cero.</p><div class="formula">A = 6 × l²</div><p class="hint">A = área total del cubo · l = longitud de la arista.</p>
+<button class="primary" id="calcular">Calcular área total</button><p class="message" id="mensajeCalc" aria-live="polite"></p><div class="result"><div>Resultado:</div><strong id="resultado">—</strong><p class="hint" id="pasos">El resultado aparecerá aquí.</p></div>
+</div></section>
+<section class="card" id="ayuda"><h3 class="title purple">💡 ¿Cómo se calcula?</h3><div class="body"><p>Un cubo tiene seis caras cuadradas iguales. Calcula el área de una cara (lado × lado) y multiplícala por seis.</p><div class="formula">A = 6 × l²</div><p class="hint">Ejemplo: si la arista mide 4 cm, A = 6 × 4² = 6 × 16 = <b>96 cm²</b>.</p></div></section>
+</div>
+<div>
+<section class="card" id="ejercicios"><h3 class="title green">＋ Agregar ejercicio o tarea</h3><div class="body"><form id="formTarea"><div class="formgrid">
+<div class="full"><label for="nombre">Nombre del ejercicio</label><input id="nombre" maxlength="90" required placeholder="Ejemplo: Calcular el área de un cubo"></div>
+<div><label for="fecha">Fecha de entrega</label><input id="fecha" type="date"></div><div><label for="aristaTarea">Arista (opcional)</label><input id="aristaTarea" type="number" min="0.01" step="any" placeholder="Ejemplo: 4"></div>
+</div><div class="actions"><button class="secondary" type="reset" id="limpiar">Limpiar</button><button class="success" type="submit" id="guardar">Agregar</button></div><p id="mensajeTarea" class="message" aria-live="polite"></p></form></div></section>
+<div class="stats"><div class="stat">✓ Completados<strong id="completados">0</strong></div><div class="stat pending">◷ Pendientes<strong id="pendientes">0</strong></div></div>
+<section class="card"><h3 class="title">☑ Lista de ejercicios</h3><div class="body"><label for="filtro">Mostrar</label><select id="filtro"><option value="todos">Todas las tareas</option><option value="pendientes">Pendientes</option><option value="completadas">Completadas</option></select><div class="tablewrap"><table><thead><tr><th>Ejercicio</th><th>Fecha</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="lista"></tbody></table><div id="vacio" class="empty">Todavía no hay tareas. ¡Agrega tu primer ejercicio!</div></div></div></section>
+</div></div><footer>Centamatic · Aprende matemáticas paso a paso</footer></main>
+<script>
+const $=id=>document.getElementById(id);
+$('calcular').addEventListener('click',()=>{
+ const texto=$('arista').value, l=Number(texto), u=$('unidad').value;
+ if(!texto.trim()||!Number.isFinite(l)||l<=0){$('resultado').textContent='—';$('pasos').textContent='Revisa la medida e inténtalo de nuevo.';$('mensajeCalc').textContent='Ingresa una longitud mayor que cero.';$('mensajeCalc').className='message error';return;}
+ const area=6*l*l, fmt=n=>new Intl.NumberFormat('es-CO',{maximumFractionDigits:4}).format(n);
+ $('resultado').textContent=`${fmt(area)} ${u}²`;$('pasos').textContent=`A = 6 × ${fmt(l)}² = 6 × ${fmt(l*l)} = ${fmt(area)} ${u}²`;$('mensajeCalc').textContent='¡Cálculo realizado correctamente!';$('mensajeCalc').className='message ok';
+});
+let tareas=[];try{tareas=JSON.parse(localStorage.getItem('centamatic_tareas')||'[]');if(!Array.isArray(tareas))tareas=[];}catch(e){tareas=[];}
+let editando=null;
+function guardarDatos(){try{localStorage.setItem('centamatic_tareas',JSON.stringify(tareas));}catch(e){}}
+function mensaje(texto,tipo='ok'){$('mensajeTarea').textContent=texto;$('mensajeTarea').className='message '+tipo;}
+function resetear(){editando=null;$('formTarea').reset();$('guardar').textContent='Agregar';}
+$('limpiar').addEventListener('click',()=>{editando=null;$('guardar').textContent='Agregar';mensaje('');});
+$('formTarea').addEventListener('submit',e=>{
+ e.preventDefault();const nombre=$('nombre').value.trim(),fecha=$('fecha').value,txt=$('aristaTarea').value.trim(),arista=txt===''?null:Number(txt);
+ if(!nombre){mensaje('Escribe el nombre del ejercicio.','error');return;}
+ if(txt!==''&&(!Number.isFinite(arista)||arista<=0)){mensaje('La arista debe ser mayor que cero.','error');return;}
+ if(tareas.some(t=>t.id!==editando&&t.nombre.toLocaleLowerCase('es')===nombre.toLocaleLowerCase('es')&&t.fecha===fecha)){mensaje('Ya existe una tarea con ese nombre y esa fecha.','error');return;}
+ if(editando!==null){tareas=tareas.map(t=>t.id===editando?{...t,nombre,fecha,arista}:t);mensaje('Tarea modificada.');}
+ else{tareas.push({id:Date.now()+Math.random(),nombre,fecha,arista,hecha:false});mensaje('¡Tarea agregada!');}
+ guardarDatos();resetear();dibujar();
+});
+function boton(texto,clase,accion,etiqueta){const b=document.createElement('button');b.type='button';b.textContent=texto;b.className=clase;b.setAttribute('aria-label',etiqueta);b.addEventListener('click',accion);return b;}
+function editar(t){editando=t.id;$('nombre').value=t.nombre;$('fecha').value=t.fecha||'';$('aristaTarea').value=t.arista??'';$('guardar').textContent='Guardar cambios';mensaje('Edita los datos y guarda los cambios.');$('formTarea').scrollIntoView({behavior:'smooth',block:'center'});}
+function dibujar(){
+ const filtro=$('filtro').value,lista=tareas.filter(t=>filtro==='todos'||(filtro==='completadas'?t.hecha:!t.hecha));$('lista').replaceChildren();$('vacio').style.display=lista.length?'none':'block';
+ lista.forEach(t=>{const tr=document.createElement('tr');if(t.hecha)tr.className='task-done';const n=document.createElement('td');n.textContent=t.nombre+(t.arista?` (${t.arista})`:'');const f=document.createElement('td');f.textContent=t.fecha?t.fecha.split('-').reverse().join('/'):'—';const est=document.createElement('td');const badge=document.createElement('span');badge.className='status'+(t.hecha?' done':'');badge.textContent=t.hecha?'Completado':'Pendiente';est.append(badge);const a=document.createElement('td'),acciones=document.createElement('div');acciones.className='table-actions';
+ acciones.append(boton(t.hecha?'↶':'✓','secondary',()=>{t.hecha=!t.hecha;guardarDatos();dibujar();},t.hecha?'Marcar pendiente':'Marcar completada'),boton('✎','secondary',()=>editar(t),'Editar'),boton('🗑','danger',()=>{if(confirm(`¿Eliminar "${t.nombre}"?`)){tareas=tareas.filter(x=>x.id!==t.id);if(editando===t.id)resetear();guardarDatos();dibujar();}},'Eliminar'));a.append(acciones);tr.append(n,f,est,a);$('lista').append(tr);});
+ $('completados').textContent=tareas.filter(t=>t.hecha).length;$('pendientes').textContent=tareas.filter(t=>!t.hecha).length;
+}
+$('filtro').addEventListener('change',dibujar);dibujar();
+</script></body></html>
